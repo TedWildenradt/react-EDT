@@ -1,4 +1,5 @@
 import React from 'react';
+import {debounce} from 'lodash';
 
 class SearchBar extends React.Component{
   constructor(){
@@ -7,6 +8,15 @@ class SearchBar extends React.Component{
       searchQuery: ''
     }
   }
+
+  setSearchQuery = debounce(e => {
+    this.setState({
+      searchQuery: e.target.value
+    })
+  }, 400)
+
+  
+
 
   render(){
     return(
