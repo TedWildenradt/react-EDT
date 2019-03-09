@@ -11,8 +11,13 @@ class EmployeeList extends React.Component {
   }
 
   componentDidMount(){
-    axios.get('/api/employees')
-    .then( res => console.log(res.json()) )
+    axios.get('/api/employees', {
+      params: {
+        fname: 'bob'
+      }
+    })
+    .then( res => res.data )
+    .then(employees => this.setState({employees}))
     
   }
 

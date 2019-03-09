@@ -5,17 +5,14 @@ const validText = require('./valid-text');
 module.exports = function validateRegisterInput(data) {
   let errors = {};
 
-  data.fname = validText(data.handle) ? data.handle : '';
+  data.fname = validText(data.fname) ? data.fname : '';
   data.lname = validText(data.email) ? data.email : '';
   data.password = validText(data.password) ? data.password : '';
   data.password2 = validText(data.password2) ? data.password2 : '';
 
-  if (!Validator.isLength(data.handle, { min: 2, max: 30 })) {
-    errors.handle = 'Handle must be between 2 and 30 characters';
-  }
 
   if (Validator.isEmpty(data.fname)) {
-    errors.handle = 'First name field is required';
+    errors.fname = 'First name field is required';
   }
   
   if (Validator.isEmpty(data.lname)) {
@@ -23,7 +20,7 @@ module.exports = function validateRegisterInput(data) {
   }
 
   if (Validator.isEmpty(data.e_id)) {
-    errors.handle = 'Employee ID field is required';
+    errors.e_id = 'Employee ID field is required';
   }
 
   if (Validator.isEmpty(data.password)) {
