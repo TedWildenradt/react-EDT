@@ -4,8 +4,21 @@ const bcrypt = require('bcryptjs');
 const Employee = require('../../models/Employee');
 const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
+const passport = require('passport');
+
+const validateRegisterInput = require('../../validations/register');
+const validateLoginInput = require('../../validations/login');
 
 router.get("/test", (req, res) => res.json({ msg: "This is the employees route" }));
+
+router.get('/current', passport.authenticate('jwt', {session: false}), (req, res) => {
+  res.json({
+    id: req.employee.id,
+    e_id: req.employee.e_id,
+    fname: req.employee.fname,
+    lname: req.employee.lname
+  });
+})
 
 router.post('/register', (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
@@ -57,7 +70,7 @@ router.post('/login', (req, res) => {
     return res.status(400).json(errors);
   }
 
-  const fname = req.body.e_id;
+  const e_id = req.body.e_id;
   const password = req.body.password;
 
   Employee.findOne({e_id})
