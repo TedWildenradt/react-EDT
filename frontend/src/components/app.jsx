@@ -1,9 +1,13 @@
 import React from 'react';
+import Header from './header';
+import SearchBar from './searchbar';
+
 
 
 const App = () => (
   <div className="overall">
-    <h1>Test header</h1>
+    <Header />
+    <SearchBar />
   </div>
 )
 
