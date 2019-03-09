@@ -12,11 +12,12 @@ const validateLoginInput = require('../../validations/login');
 router.get("/test", (req, res) => res.json({ msg: "This is the employees route" }));
 
 router.get('/current', passport.authenticate('jwt', {session: false}), (req, res) => {
+
   res.json({
-    id: req.employee.id,
-    e_id: req.employee.e_id,
-    fname: req.employee.fname,
-    lname: req.employee.lname
+    id: req.user.id,
+    e_id: req.user.e_id,
+    fname: req.user.fname,
+    lname: req.user.lname
   });
 })
 
