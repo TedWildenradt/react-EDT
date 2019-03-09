@@ -1,5 +1,6 @@
 import React from 'react';
 import {debounce} from 'lodash';
+import EmployeeList from './employee/employee_list';
 
 class SearchBar extends React.Component{
   constructor(){
@@ -15,15 +16,16 @@ class SearchBar extends React.Component{
     })
   }, 400)
 
-  
+  displayMatches
 
 
   render(){
     return(
       <div className="search-form">
         <form>
-          <input type="text" placeholder="Search Employee Directory..." onChange={this.setSearchQuery}/>
+          <input id="searchbar" type="text" placeholder="Search Employee Directory..." onChange={this.setSearchQuery}/>
         </form>
+        <EmployeeList searchQuery={this.state.searchQuery}/>
       </div>
     )
   }

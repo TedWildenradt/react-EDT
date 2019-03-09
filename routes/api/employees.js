@@ -21,6 +21,13 @@ router.get('/current', passport.authenticate('jwt', {session: false}), (req, res
   });
 })
 
+router.get('/', (req, res) => {
+  Employee.find()
+      .sort({ date: -1 })
+      .then(employees => res.json(employees))
+      .catch(err => res.status(404).json({ noemployeesfound: 'No employees found' }));
+});
+
 router.post('/register', (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 
