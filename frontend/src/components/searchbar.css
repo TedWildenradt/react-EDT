@@ -1,5 +1,11 @@
 #searchbar {
   height: 40px;
+  width: 500px;
+  /* margin-left: 581px; */
   font-size: 24px
 
+}
+.overall {
+  margin:auto;
+  width: 500px;
 }
