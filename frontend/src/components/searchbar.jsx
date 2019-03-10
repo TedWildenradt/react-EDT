@@ -1,31 +1,73 @@
 import React from 'react';
-import {debounce} from 'lodash';
-import EmployeeList from './employee/employee_list';
+import axios from 'axios';
+import EmployeeListItem from './employee/employee_list_item';
 
 class SearchBar extends React.Component{
   constructor(){
     super()
     this.state = {
-      searchQuery: ''
+      searchQuery: '',
+      employees: []
     }
+    this.findMatches = this.findMatches.bind(this)
+    this.displayMatches = this.displayMatches.bind(this)
   }
 
-  setSearchQuery = debounce(e => {
-    this.setState({
-      searchQuery: e.target.value
-    })
-  }, 400)
+  componentDidMount(){
+    axios.get('/api/employees')
+    .then( res => res.data )
+    .then(employees => this.setState({employees}))    
+  }
 
-  displayMatches
+  findMatches(wordToMatch) {
+    return this.state.employees.filter( employee => {
+      const regex = new RegExp(wordToMatch, 'gi');
+      return employee.fname.match(regex) || employee.lname.match(regex) || employee.e_id.match(regex);
+    })
+  }
+
+  displayMatches (){
+    if (!this.state.searchQuery){
+      return(
+        <div>
+        </div>
+      )
+    }
+    const matchArray = this.findMatches(this.state.searchQuery);
+    const html = matchArray.map( employee => {
+      return(
+        <li key={employee.id}>
+          <EmployeeListItem employee={employee} />
+        </li>
+      )
+    })
+    return html
+  };
+
+  // setSearchQuery = debounce(e => {
+  //   this.setState({
+  //     searchQuery: e.target.value
+  //   })
+  // }, 400)
+
+  handleUpdate (field){
+    return e => this.setState({
+      [field]: e.currentTarget.value
+    })
+  }
+
 
 
   render(){
+    const matches = this.displayMatches()
     return(
       <div className="search-form">
         <form>
-          <input id="searchbar" type="text" placeholder="Search Employee Directory..." onChange={this.setSearchQuery}/>
+          <input id="searchbar" type="text" placeholder="Search Employee Directory..." onChange={this.handleUpdate('searchQuery')} value={this.state.searchQuery}/>
         </form>
-        <EmployeeList searchQuery={this.state.searchQuery}/>
+        <ul>
+          {matches}
+        </ul>
       </div>
     )
   }
