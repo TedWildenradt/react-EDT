@@ -1,10 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 import EmployeeListItem from './employee/employee_list_item';
+import './searchbar.css';
+
 
 class SearchBar extends React.Component{
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.state = {
       searchQuery: '',
       employees: []
@@ -20,9 +22,10 @@ class SearchBar extends React.Component{
   }
 
   findMatches(wordToMatch) {
+
     return this.state.employees.filter( employee => {
       const regex = new RegExp(wordToMatch, 'gi');
-      return employee.fname.match(regex) || employee.lname.match(regex) || employee.e_id.match(regex);
+      return employee.fname.match(regex) || employee.lname.match(regex);
     })
   }
 
@@ -36,7 +39,7 @@ class SearchBar extends React.Component{
     const matchArray = this.findMatches(this.state.searchQuery);
     const html = matchArray.map( employee => {
       return(
-        <li key={employee.id}>
+        <li key={employee.e_id}>
           <EmployeeListItem employee={employee} />
         </li>
       )
