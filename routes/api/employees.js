@@ -22,8 +22,8 @@ router.get('/current', passport.authenticate('jwt', {session: false}), (req, res
 })
 
 router.get('/', (req, res) => {
-  console.log(req.query);
-  Employee.find()
+  const regex = new RegExp('r','gi')
+  Employee.find({$or: [{fname: regex},{lname: regex}]})
       .sort({ date: -1 })
       .then(employees => res.json(employees))
       .catch(err => res.status(404).json({ noemployeesfound: 'No employees found' }));

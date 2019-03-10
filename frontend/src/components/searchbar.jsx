@@ -16,9 +16,7 @@ class SearchBar extends React.Component{
   }
 
   componentDidMount(){
-    axios.get('/api/employees', {params: {
-      product: 'test'
-    }})
+    axios.get('/api/employees', {params: {fname: 'r'}})
     .then( res => res.data )
     .then(employees => this.setState({employees}))    
   }
