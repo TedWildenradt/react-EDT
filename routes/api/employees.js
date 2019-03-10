@@ -22,6 +22,7 @@ router.get('/current', passport.authenticate('jwt', {session: false}), (req, res
 })
 
 router.get('/', (req, res) => {
+  console.log(req.query);
   Employee.find()
       .sort({ date: -1 })
       .then(employees => res.json(employees))

@@ -16,7 +16,9 @@ class SearchBar extends React.Component{
   }
 
   componentDidMount(){
-    axios.get('/api/employees')
+    axios.get('/api/employees', {params: {
+      product: 'test'
+    }})
     .then( res => res.data )
     .then(employees => this.setState({employees}))    
   }
@@ -25,7 +27,7 @@ class SearchBar extends React.Component{
 
     return this.state.employees.filter( employee => {
       const regex = new RegExp(wordToMatch, 'gi');
-      return employee.fname.match(regex) || employee.lname.match(regex);
+      return employee.fname.match(regex) || employee.lname.match(regex) || employee.e_id === Number(wordToMatch);
     })
   }
 
