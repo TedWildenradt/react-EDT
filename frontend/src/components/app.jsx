@@ -1,13 +1,14 @@
 import React from 'react';
 import Header from './header';
-import SearchBar from './searchbar';
+// import SearchBar from './searchbar';
+import SearchBar2 from './searchbar2';
 
 
 
 const App = () => (
   <div className="overall">
     <Header />
-    <SearchBar />
+    <SearchBar2 />
   </div>
 )
 

@@ -22,9 +22,15 @@ router.get('/current', passport.authenticate('jwt', {session: false}), (req, res
 })
 
 router.get('/', (req, res) => {
-  const regex = new RegExp('r','gi')
+  const input = req.query.input;
+  if(!input){
+    return res.json([]);
+  }
+  const regex = new RegExp(input,'gi')
+  const emp_id = Number.isInteger(input) ? Number(input) : ''
   Employee.find({$or: [{fname: regex},{lname: regex}]})
       .sort({ date: -1 })
+      .limit(10)
       .then(employees => res.json(employees))
       .catch(err => res.status(404).json({ noemployeesfound: 'No employees found' }));
 });
