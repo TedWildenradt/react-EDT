@@ -17,8 +17,8 @@ class SearchBar2 extends React.Component{
   }
 
   ajaxCall(letters){
-    console.log(letters)
-    axios.get('/api/employees', {params: {input: `${letters}`}})
+    const {searchQuery} = this.state
+    axios.get('/api/employees', {params: {input: searchQuery}})
     .then( res => res.data )
     .then(employees => {
       console.log(employees)
@@ -28,7 +28,9 @@ class SearchBar2 extends React.Component{
 
   onChange(event) {
     const letters = event.currentTarget.value
-    // event.persist();
+    this.setState({
+      searchQuery: event.currentTarget.value
+    })
     this.delayedCallback(letters);
   }
 
